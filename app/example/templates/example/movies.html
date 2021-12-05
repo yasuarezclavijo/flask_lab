@@ -1,0 +1,53 @@
+{# home.html #}
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% block content %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-12">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            {% for th in th_items %}
+                            <th scope="col" class="text-center" colspan={{ th.col_span if th.col_span else '1' }}>{{ th.col_title }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for movie in movies %}
+                        <tr>
+                            <th scope="row">{{ movie.id }}</th>
+                            <td>{{ movie.name }}</td>
+                            <td>{{ movie.duration_minutes }}</td>
+                            <td>{{ movie.category.name }}</td>
+                            <td>
+                                {% if movie.actors %}
+                                <ul>
+                                {% for actor in movie.actors %}
+                                    <li>{{ actor.first_name }} {{ actor.last_name }}</li>
+                                {% endfor %}
+                                </ul>
+                                {% else %}
+                                No actors
+                                {% endif %}
+                            </td>
+                            <td><a href="{{ url_for('example.edit_movie', movie_id=movie.id)}}">Editar</a></td>
+                            <td><a href="#">Eliminar</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <a href="{{ url_for('example.new_movie')}}" class="btn btn-info">Crear</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
