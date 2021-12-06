@@ -5,7 +5,7 @@ from flask import Blueprint
 from flask_wtf.csrf import CSRFProtect
 from flask_bootstrap import Bootstrap
 
-from services import app_logging, app_db
+from services import app_logging, app_db, ma
 from settings import INSTALLED_APPS
 
 def create_app():
@@ -14,6 +14,7 @@ def create_app():
     # services
     app.logger = app_logging.init_app(app)
     app_db.init_app(app)
+    ma.init_app(app)
     Bootstrap(app)
     csrf = CSRFProtect()
     csrf.init_app(app)
